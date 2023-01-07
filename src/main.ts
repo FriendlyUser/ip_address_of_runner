@@ -19,7 +19,11 @@ async function run(): Promise<void> {
     const ipInfo = await getIpInfo(ipAddressOfRunner)
     // output ip info
     core.notice(`ipInfo: ${JSON.stringify(ipInfo)}`)
-    core.setOutput('ip', ipInfo)
+    core.setOutput('ip_raw', ipInfo)
+    // for each property in ipInfo, set output
+    for (const [key, value] of Object.entries(ipInfo)) {
+      core.setOutput(key, value)
+    }
     core.notice(`ip: ${ipInfo.ip}`)
     core.notice(`country: ${ipInfo.countryname}`)
   } catch (error) {
