@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import {getIpAddress, getIpInfo} from './ip'
 import {wait} from './wait'
 
 async function run(): Promise<void> {
@@ -9,8 +10,18 @@ async function run(): Promise<void> {
     core.debug(new Date().toTimeString())
     await wait(parseInt(ms, 10))
     core.debug(new Date().toTimeString())
+    // getIpAddress
+    // get ip
+    const ipAddressOfRunner = await getIpAddress()
+    core.debug(`ipAddressOfRunner: ${ipAddressOfRunner}`)
 
-    core.setOutput('time', new Date().toTimeString())
+    // get ip info
+    const ipInfo = await getIpInfo(ipAddressOfRunner)
+    // output ip info
+    core.debug(`ipInfo: ${JSON.stringify(ipInfo)}`)
+    core.setOutput('ip', ipInfo)
+    core.info(`ip: ${ipInfo.ip}`)
+    core.info(`country: ${ipInfo.countryname}`)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
