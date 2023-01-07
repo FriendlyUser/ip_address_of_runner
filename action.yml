@@ -1,6 +1,8 @@
 name: 'ip_address_of_runner'
 description: 'Grab ip address of runner using free apis'
 author: 'FriendlyUser'
+icon: info
+color: purple
 inputs:
   milliseconds: # change this
     required: false
