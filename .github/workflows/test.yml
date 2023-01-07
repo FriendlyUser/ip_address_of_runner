@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: FriendlyUser/ip_address_of_runner@latest
+      - uses: FriendlyUser/ip_address_of_runner@v1.0.0
         id: ip-step
         with:
           milliseconds: 1000
