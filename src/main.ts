@@ -18,10 +18,10 @@ async function run(): Promise<void> {
     // get ip info
     const ipInfo = await getIpInfo(ipAddressOfRunner)
     // output ip info
-    core.debug(`ipInfo: ${JSON.stringify(ipInfo)}`)
+    core.notice(`ipInfo: ${JSON.stringify(ipInfo)}`)
     core.setOutput('ip', ipInfo)
-    core.info(`ip: ${ipInfo.ip}`)
-    core.info(`country: ${ipInfo.countryname}`)
+    core.notice(`ip: ${ipInfo.ip}`)
+    core.notice(`country: ${ipInfo.countryname}`)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
