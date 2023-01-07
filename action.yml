@@ -1,9 +1,11 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'ip_address_of_runner'
+description: 'Grab ip address of runner using free apis'
+author: 'FriendlyUser'
+icon: info
+color: purple
 inputs:
   milliseconds: # change this
-    required: true
+    required: false
     description: 'input description here'
     default: 'default value if applicable'
 runs:
