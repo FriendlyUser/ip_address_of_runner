@@ -25,3 +25,7 @@ jobs:
       - uses: ./
         with:
           milliseconds: 1000
+      # script output contents of ip from the step
+      - run: |
+          echo "The selected color is ${{ steps.test.outputs.ip }}"
+          echo "ip: ${{ steps.test.outputs.ip }}"
