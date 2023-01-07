@@ -117,10 +117,14 @@ function run() {
             // get ip info
             const ipInfo = yield (0, ip_1.getIpInfo)(ipAddressOfRunner);
             // output ip info
-            core.debug(`ipInfo: ${JSON.stringify(ipInfo)}`);
-            core.setOutput('ip', ipInfo);
-            core.info(`ip: ${ipInfo.ip}`);
-            core.info(`country: ${ipInfo.countryname}`);
+            core.notice(`ipInfo: ${JSON.stringify(ipInfo)}`);
+            core.setOutput('ip_raw', ipInfo);
+            // for each property in ipInfo, set output
+            for (const [key, value] of Object.entries(ipInfo)) {
+                core.setOutput(key, value);
+            }
+            core.notice(`ip: ${ipInfo.ip}`);
+            core.notice(`country: ${ipInfo.countryname}`);
         }
         catch (error) {
             if (error instanceof Error)
