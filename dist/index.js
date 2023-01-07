@@ -1,6 +1,70 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 3:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getIpInfo = exports.getIpAddress = void 0;
+const https_1 = __importDefault(__nccwpck_require__(211));
+function getIpAddress() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
+            https_1.default.get('https://jsonip.com', res => {
+                res.setEncoding('utf8');
+                let body = '';
+                res.on('data', data => {
+                    body += data;
+                });
+                res.on('end', () => {
+                    const json = JSON.parse(body);
+                    resolve(json.ip);
+                });
+                res.on('error', error => {
+                    reject(error);
+                });
+            });
+        });
+    });
+}
+exports.getIpAddress = getIpAddress;
+const getIpInfo = (ip) => __awaiter(void 0, void 0, void 0, function* () {
+    return new Promise((resolve, reject) => {
+        https_1.default.get(`https://iplist.cc/api/${ip}`, res => {
+            res.setEncoding('utf8');
+            let body = '';
+            res.on('data', data => {
+                body += data;
+            });
+            res.on('end', () => {
+                const json = JSON.parse(body);
+                resolve(json);
+            });
+            res.on('error', error => {
+                reject(error);
+            });
+        });
+    });
+});
+exports.getIpInfo = getIpInfo;
+
+
+/***/ }),
+
 /***/ 109:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -36,6 +100,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
+const ip_1 = __nccwpck_require__(3);
 const wait_1 = __nccwpck_require__(817);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -45,7 +110,17 @@ function run() {
             core.debug(new Date().toTimeString());
             yield (0, wait_1.wait)(parseInt(ms, 10));
             core.debug(new Date().toTimeString());
-            core.setOutput('time', new Date().toTimeString());
+            // getIpAddress
+            // get ip
+            const ipAddressOfRunner = yield (0, ip_1.getIpAddress)();
+            core.debug(`ipAddressOfRunner: ${ipAddressOfRunner}`);
+            // get ip info
+            const ipInfo = yield (0, ip_1.getIpInfo)(ipAddressOfRunner);
+            // output ip info
+            core.debug(`ipInfo: ${JSON.stringify(ipInfo)}`);
+            core.setOutput('ip', ipInfo);
+            core.info(`ip: ${ipInfo.ip}`);
+            core.info(`country: ${ipInfo.countryname}`);
         }
         catch (error) {
             if (error instanceof Error)

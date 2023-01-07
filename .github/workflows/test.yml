@@ -1,3 +1,6 @@
+env:
+  ACTIONS_STEP_DEBUG: true
+
 name: 'build-test'
 on: # rebuild any PRs and main branch changes
   pull_request:
@@ -22,4 +25,3 @@ jobs:
       - uses: ./
         with:
           milliseconds: 1000
-          ACTIONS_STEP_DEBUG: true
